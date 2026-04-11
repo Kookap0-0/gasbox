@@ -6,7 +6,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800, 600), "Gasbox");
     window.setVerticalSyncEnabled(true); // вместо setFramerateLimit
 
-    Simulation sim(4000);
+    Simulation sim(3000);
 
     const float dt = 1.f / 120.f;     // фиксированный шаг физики
     const float maxFrameTime = 0.25f; // защита от скачков (250 мс)

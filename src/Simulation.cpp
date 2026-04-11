@@ -23,56 +23,51 @@ Simulation::Simulation(unsigned int count)
 
 void Simulation::update(float dt)
 {
-    // 1️⃣ Двигаем частицы
-    for (size_t i = 0; i < particles.size(); ++i)
+    float subDt = dt / static_cast<float>(substeps);
+
+    for (int step = 0; step < substeps; ++step)
     {
-        particles[i].update(dt);
-    }
+        // 1. Двигаем
+        for (auto& p : particles)
+            p.update(subDt);
 
-    // 2️⃣ Перестраиваем spatial grid
-    grid.clear();
-    grid.reserve(particles.size());
+        // 2. Строим grid
+        grid.clear();
 
-    for (size_t i = 0; i < particles.size(); ++i)
-    {
-        int cellX = static_cast<int>(particles[i].getX() / cellSize);
-        int cellY = static_cast<int>(particles[i].getY() / cellSize);
-
-        int key = getCellKey(cellX, cellY);
-        grid[key].push_back(i);
-    }
-
-    // 3️⃣ Итерационный solver столкновений
-    const int solverIterations = 3;
-    
-
-    for (int iter = 0; iter < solverIterations; ++iter)
-    {
-        for (auto& [key, cellParticles] : grid)
+        for (size_t i = 0; i < particles.size(); ++i)
         {
-            int cellX = key % 10000;
-            int cellY = key / 10000;
+            int cellX = static_cast<int>(particles[i].getX() / cellSize);
+            int cellY = static_cast<int>(particles[i].getY() / cellSize);
+            int key = getCellKey(cellX, cellY);
+            grid[key].push_back(i);
+        }
 
-            for (int offsetX = -1; offsetX <= 1; ++offsetX)
+        // 3. Столкновения
+        for (int iter = 0; iter < solverIterations; ++iter)
+        {
+            for (auto& [key, cellParticles] : grid)
             {
-                for (int offsetY = -1; offsetY <= 1; ++offsetY)
+                int cellX = key % 10000;
+                int cellY = key / 10000;
+
+                for (int offsetX = -1; offsetX <= 1; ++offsetX)
                 {
-                    int neighborKey = getCellKey(cellX + offsetX,
-                                                 cellY + offsetY);
-
-                    auto it = grid.find(neighborKey);
-                    if (it == grid.end())
-                        continue;
-
-                    auto& neighborParticles = it->second;
-
-                    for (int i : cellParticles)
+                    for (int offsetY = -1; offsetY <= 1; ++offsetY)
                     {
-                        for (int j : neighborParticles)
+                        int neighborKey = getCellKey(cellX + offsetX,
+                                                     cellY + offsetY);
+
+                        if (grid.find(neighborKey) == grid.end())
+                            continue;
+
+                        auto& neighborParticles = grid[neighborKey];
+
+                        for (int i : cellParticles)
                         {
-                            if (i < j)
+                            for (int j : neighborParticles)
                             {
-                                particles[i].resolveCollision(particles[j]);
+                                if (i < j)
+                                    particles[i].resolveCollision(particles[j]);
                             }
                         }
                     }
@@ -80,14 +75,12 @@ void Simulation::update(float dt)
             }
         }
 
-        // 💡 ВАЖНО: после каждой итерации снова проверяем стены
-        for (size_t i = 0; i < particles.size(); ++i)
-        {
-            box.handleCollision(particles[i]);
-        }
+        // 4. Стены
+        for (auto& p : particles)
+            box.handleCollision(p);
     }
 
-    // 4️⃣ Обновляем рендер-данные
+    // 5. Обновляем vertices ОДИН РАЗ
     for (size_t i = 0; i < particles.size(); ++i)
     {
         vertices[i].position = {
@@ -96,24 +89,6 @@ void Simulation::update(float dt)
         };
 
         vertices[i].color = sf::Color::White;
-    }
-    static float energyTimer = 0.f;
-    energyTimer += dt;
-
-    if (energyTimer >= 1.f) // выводим раз в секунду
-    {
-        energyTimer = 0.f;
-
-        float totalEnergy = 0.f;
-
-        for (auto& p : particles)
-        {
-            float vx = p.getVX();
-            float vy = p.getVY();
-            totalEnergy += 0.5f * (vx * vx + vy * vy);
-        }
-
-        std::cout << "Total Energy: " << totalEnergy << std::endl;
     }
 }
 

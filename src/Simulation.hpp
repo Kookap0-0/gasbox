@@ -15,6 +15,9 @@ private:
     float cellSize = 4.f; // 2 * радиус (если радиус = 1)
     std::unordered_map<int, std::vector<int>> grid;
 
+    int substeps = 2;
+    int solverIterations = 2;
+
 public:
     Simulation(unsigned int count);
     int getCellKey(int cellX, int cellY) const;
