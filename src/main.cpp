@@ -4,14 +4,20 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Gasbox");
-    window.setFramerateLimit(60);
+    window.setVerticalSyncEnabled(true); // вместо setFramerateLimit
 
-    Simulation sim(100);
+    Simulation sim(4000);
 
+    const float dt = 1.f / 120.f;     // фиксированный шаг физики
+    const float maxFrameTime = 0.25f; // защита от скачков (250 мс)
+    const int maxSteps = 5;           // максимум физических шагов за кадр
+
+    float accumulator = 0.f;
     sf::Clock clock;
 
     while (window.isOpen())
     {
+        // 1️ Обработка событий
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -19,11 +25,29 @@ int main()
                 window.close();
         }
 
-        float dt = clock.restart().asSeconds();
+        // 2️ Замер времени
+        float frameTime = clock.restart().asSeconds();
 
-        sim.update(dt);
+        if (frameTime > maxFrameTime)
+            frameTime = maxFrameTime;
 
-        window.clear(sf::Color::Black);
+        accumulator += frameTime;
+
+        // 3️ Фиксированная физика с защитой
+        int steps = 0;
+        while (accumulator >= dt && steps < maxSteps)
+        {
+            sim.update(dt);
+            accumulator -= dt;
+            steps++;
+        }
+
+        // если не успели догнать — сбрасываем хвост
+        if (steps == maxSteps)
+            accumulator = 0.f;
+
+        // 4️ Отрисовка
+        window.clear();
         sim.render(window);
         window.display();
     }
