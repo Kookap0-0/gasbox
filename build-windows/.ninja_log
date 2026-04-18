@@ -1,11 +1,6 @@
 # ninja log v7
-3	313	1776510417689409232	CMakeFiles/gasbox.dir/src/Particle.cpp.obj	eaaaaaf4b85f512
-3	940	1776510417690462511	CMakeFiles/gasbox.dir/src/Box.cpp.obj	535f353924cf5175
-2	1102	1776510417688409262	CMakeFiles/gasbox.dir/src/main.cpp.obj	8100c1e9cae5a346
-3	1539	1776510417690873071	CMakeFiles/gasbox.dir/src/Simulation.cpp.obj	c152441ec7e41af4
-1539	1620	1776510419226760102	gasbox.exe	7e40761b04a1505
-3	336	1776511115805648034	CMakeFiles/gasbox.dir/src/Particle.cpp.obj	81e0fa30a68a017f
-4	938	1776511115805715235	CMakeFiles/gasbox.dir/src/Box.cpp.obj	bcd060ab89436699
-2	1107	1776511115804715265	CMakeFiles/gasbox.dir/src/main.cpp.obj	2d57dc38dacf146b
-4	1621	1776511115806519598	CMakeFiles/gasbox.dir/src/Simulation.cpp.obj	a9d05d1bb7d3848
-1621	1683	1776511117422667019	gasbox.exe	baac793c15d1c758
+2	351	1776511185823645724	CMakeFiles/gasbox.dir/src/Particle.cpp.obj	81e0fa30a68a017f
+3	967	1776511185824097350	CMakeFiles/gasbox.dir/src/Box.cpp.obj	bcd060ab89436699
+2	1126	1776511185822623320	CMakeFiles/gasbox.dir/src/main.cpp.obj	2d57dc38dacf146b
+3	1646	1776511185824580675	CMakeFiles/gasbox.dir/src/Simulation.cpp.obj	a9d05d1bb7d3848
+1646	1712	1776511187467707425	gasbox.exe	baac793c15d1c758
