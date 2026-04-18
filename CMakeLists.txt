@@ -17,7 +17,8 @@ add_executable(gasbox
 )
 
 target_link_libraries(gasbox
-    sfml-graphics
-    sfml-window
-    sfml-system
+    sfml-graphics sfml-window sfml-system sfml-main
+    -static-libgcc 
+    -static-libstdc++ 
+    -static -Wl,--subsystem,windows
 )
