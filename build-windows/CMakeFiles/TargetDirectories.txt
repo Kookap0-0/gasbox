@@ -1,0 +1,3 @@
+/home/reyn/repos/gasbox/build-windows/CMakeFiles/gasbox.dir
+/home/reyn/repos/gasbox/build-windows/CMakeFiles/edit_cache.dir
+/home/reyn/repos/gasbox/build-windows/CMakeFiles/rebuild_cache.dir

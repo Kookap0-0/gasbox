@@ -1,0 +1,3 @@
+/home/reyn/repos/gasbox/build-linux/CMakeFiles/gasbox.dir
+/home/reyn/repos/gasbox/build-linux/CMakeFiles/edit_cache.dir
+/home/reyn/repos/gasbox/build-linux/CMakeFiles/rebuild_cache.dir
