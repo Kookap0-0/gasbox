@@ -19,12 +19,7 @@ target_link_libraries(gasbox
     sfml-system
 )
 
-set(SFML_RUNTIME_DIR /home/reyn/libs/SFML-2.6.1/bin)
-
-if (WIN32)
-    add_custom_command(TARGET gasbox POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${SFML_RUNTIME_DIR}
-        $<TARGET_FILE_DIR:gasbox>
-    )
-endif()
+# static C++ runtime (Windows MinGW)
+set(CMAKE_EXE_LINKER_FLAGS
+    "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++"
+)
