@@ -95,7 +95,7 @@ build CMakeFiles/gasbox.dir/src/Simulation.cpp.o: CXX_COMPILER__gasbox_unscanned
 
 build gasbox: CXX_EXECUTABLE_LINKER__gasbox_Release CMakeFiles/gasbox.dir/src/main.cpp.o CMakeFiles/gasbox.dir/src/Particle.cpp.o CMakeFiles/gasbox.dir/src/Box.cpp.o CMakeFiles/gasbox.dir/src/Simulation.cpp.o | /home/reyn/libs/SFML-2.6.1/bin/sfml-graphics-2.dll /home/reyn/libs/SFML-2.6.1/bin/sfml-window-2.dll /home/reyn/libs/SFML-2.6.1/bin/sfml-system-2.dll
   FLAGS = -O3 -DNDEBUG
-  LINK_FLAGS = -static-libgcc -static-libstdc++
+  LINK_FLAGS = -static-libgcc -static-libstdc++ -Wl,--enable-auto-import
   LINK_LIBRARIES = -Wl,-rpath,/home/reyn/libs/SFML-2.6.1/bin  /home/reyn/libs/SFML-2.6.1/bin/sfml-graphics-2.dll  /home/reyn/libs/SFML-2.6.1/bin/sfml-window-2.dll  /home/reyn/libs/SFML-2.6.1/bin/sfml-system-2.dll
   OBJECT_DIR = CMakeFiles/gasbox.dir
   POST_BUILD = :
