@@ -18,8 +18,3 @@ target_link_libraries(gasbox
     sfml-window
     sfml-system
 )
-
-# static C++ runtime (Windows MinGW)
-set(CMAKE_EXE_LINKER_FLAGS
-    "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++"
-)
