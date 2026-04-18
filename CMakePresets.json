@@ -11,15 +11,14 @@
     },
     {
     "name": "windows",
-    "generator": "Ninja",
+    "generator": "Ninja", 
     "binaryDir": "${sourceDir}/build-windows",
     "cacheVariables": {
-        "CMAKE_SYSTEM_NAME": "Windows",
+        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_C_COMPILER": "x86_64-w64-mingw32-gcc",
         "CMAKE_CXX_COMPILER": "x86_64-w64-mingw32-g++",
-        "CMAKE_PREFIX_PATH": "/home/reyn/libs/SFML-2.6.1",
-        "CMAKE_BUILD_TYPE": "Release"
-  }
-}
+        "SFML_DIR": "/home/reyn/libs/SFML-2.6.1/lib/cmake/SFML"
+    }
+    }
   ]
 }

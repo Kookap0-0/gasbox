@@ -4,7 +4,10 @@ project(gasbox)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(SFML COMPONENTS graphics window system REQUIRED)
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+find_package(SFML 2.6 COMPONENTS graphics window system REQUIRED)
 
 add_executable(gasbox
     src/main.cpp
