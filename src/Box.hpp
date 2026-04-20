@@ -1,6 +1,4 @@
 #pragma once
-
-#include "Particle.hpp"
 #include <SFML/Graphics.hpp>
 
 class Box
@@ -15,7 +13,7 @@ private:
 public:
     Box(float l, float r, float t, float b);
 
-    void handleCollision(Particle& p) const;
+    void handleCollision(float& x, float& y, float& vx, float& vy, float radius) const;
     void render(sf::RenderWindow& window) const;
     float getLeft() const;
     float getRight() const;

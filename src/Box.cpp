@@ -11,36 +11,22 @@ Box::Box(float l, float r, float t, float b)
     border.setOutlineThickness(1.f);
 }
 
-void Box::handleCollision(Particle& p) const
-{
-    float r = p.getRadius();
-
-    // Левая стена
-    if (p.getX() - r < left)
-    {
-        p.setX(left + r);
-        p.invertVx();
+void Box::handleCollision(float& x, float& y, float& vx, float& vy, float radius) const {
+    if (x - radius < left) {
+        x = left + radius;
+        vx = -vx;
     }
-
-    // Правая стена
-    if (p.getX() + r > right)
-    {
-        p.setX(right - r);
-        p.invertVx();
+    if (x + radius > right) {
+        x = right - radius;
+        vx = -vx;
     }
-
-    // Верхняя стена
-    if (p.getY() - r < top)
-    {
-        p.setY(top + r);
-        p.invertVy();
+    if (y - radius < top) {
+        y = top + radius;
+        vy = -vy;
     }
-
-    // Нижняя стена
-    if (p.getY() + r > bottom)
-    {
-        p.setY(bottom - r);
-        p.invertVy();
+    if (y + radius > bottom) {
+        y = bottom - radius;
+        vy = -vy;
     }
 }
 
