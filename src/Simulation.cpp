@@ -8,33 +8,80 @@ Simulation::Simulation(unsigned int count)
       vertices(sf::Points),
       box(50.f, 750.f, 50.f, 550.f)
 {
-
+    // --- FPS ---
     if (!font.loadFromFile("fonts/Sekuya-Regular.ttf")) {
-    std::cerr << "Failed to load font arial.ttf" << std::endl;
+        std::cerr << "Failed to load font\n";
     }
+
     fpsText.setFont(font);
-    fpsText.setCharacterSize(20);
-    fpsText.setFillColor(sf::Color::White);
+    fpsText.setCharacterSize(18);
+    fpsText.setFillColor(sf::Color(220, 220, 220));
     fpsText.setPosition(10.f, 10.f);
-    fpsText.setString("FPS: 0");
 
+    // --- Гистограмма ---
+    histogramX.resize(HISTOGRAM_BINS);
+    histogramY.resize(HISTOGRAM_BINS);
 
-    // Вычисляем размеры сетки на основе размеров коробки и cellSize
-    float boxWidth = box.getRight() - box.getLeft();   // 700
-    float boxHeight = box.getBottom() - box.getTop();  // 500
+    for (int i = 0; i < HISTOGRAM_BINS; ++i) {
+        histogramX[i] = static_cast<float>(i);
+        histogramY[i] = 0.f;
+    }
+
+    speedDataSet = std::make_unique<PlotDataSet>(
+        histogramX,
+        histogramY,
+        sf::Color(80, 220, 255),   // мягкий голубой
+        "Speed Distribution",
+        PlottingType::BARS
+    );
+
+    speedPlot = std::make_unique<SFPlot>(
+        sf::Vector2f(800.f, 20.f),     // позиция
+        sf::Vector2f(580.f, 560.f),    // размер
+        40.f,                          // отступы
+        font,
+        "Speed",
+        "Count"
+    );
+
+    speedPlot->AddDataSet(*speedDataSet);
+
+    // фиксированный масштаб (не дергается)
+    speedPlot->SetupAxes(
+        0.f,
+        static_cast<float>(HISTOGRAM_BINS),
+        0.f,
+        100.f,
+        1.f,
+        20.f,
+        sf::Color(180, 180, 180)
+    );
+
+    speedPlot->GenerateVertices();
+
+    // --- Панель под график ---
+    plotPanel.setPosition(790.f, 10.f);
+    plotPanel.setSize({600.f, 580.f});
+    plotPanel.setFillColor(sf::Color(18, 18, 22));
+    plotPanel.setOutlineThickness(2.f);
+    plotPanel.setOutlineColor(sf::Color(60, 60, 70));
+
+    // --- Сетка ---
+    float boxWidth = box.getRight() - box.getLeft();
+    float boxHeight = box.getBottom() - box.getTop();
+
     gridWidth = static_cast<int>(std::ceil(boxWidth / cellSize));
     gridHeight = static_cast<int>(std::ceil(boxHeight / cellSize));
-    
-    // Инициализируем плоскую сетку: gridWidth * gridHeight пустых векторов
     grid.resize(gridWidth * gridHeight);
 
-    // Генерация частиц
+    // --- Частицы ---
     std::random_device rd;
     std::mt19937 rng(rd());
+
     std::uniform_real_distribution<float> posX(box.getLeft() + 20.f, box.getRight() - 20.f);
     std::uniform_real_distribution<float> posY(box.getTop() + 20.f, box.getBottom() - 20.f);
     std::uniform_real_distribution<float> vel(-50.f, 50.f);
-    
+
     for (size_t i = 0; i < count; ++i) {
         particles.posX[i] = posX(rng);
         particles.posY[i] = posY(rng);
@@ -185,8 +232,18 @@ void Simulation::update(float dt)
 
 void Simulation::render(sf::RenderWindow& window)
 {
+    // частицы
     window.draw(vertices);
     box.render(window);
+
+    // панель графика (фон)
+    window.draw(plotPanel);
+
+    // сам график
+    if (speedPlot)
+        window.draw(*speedPlot);
+
+    // FPS поверх всего
     window.draw(fpsText);
 }
 
@@ -199,4 +256,67 @@ void Simulation::updateFPS(float dt) {
         frameCount = 0;
         fpsUpdateTimer = 0.f;
     }
+}
+
+
+void Simulation::updateHistogram(float dt)
+{
+    histogramUpdateTimer += dt;
+    if (histogramUpdateTimer < 0.3f) return;
+    histogramUpdateTimer = 0.f;
+
+    std::fill(histogramY.begin(), histogramY.end(), 0.f);
+
+    float binWidth = MAX_SPEED / HISTOGRAM_BINS;
+
+    for (size_t i = 0; i < particles.size(); ++i) {
+        float speed = std::sqrt(
+            particles.velX[i] * particles.velX[i] +
+            particles.velY[i] * particles.velY[i]
+        );
+
+        int bin = static_cast<int>(speed / binWidth);
+        if (bin < 0) bin = 0;
+        if (bin >= HISTOGRAM_BINS) bin = HISTOGRAM_BINS - 1;
+
+        histogramY[bin]++;
+    }
+
+    // --- вычисляем максимум ---
+    float maxY = 1.f;
+    for (float v : histogramY)
+        if (v > maxY) maxY = v;
+
+    maxY *= 1.2f;
+
+    // ❗ КЛЮЧ: пересоздаём dataset
+    speedDataSet = std::make_unique<PlotDataSet>(
+        histogramX,
+        histogramY,
+        sf::Color(80, 220, 255, 200),
+        "",
+        PlottingType::BARS
+    );
+
+    // ❗ очищаем график полностью
+    speedPlot->ClearVertices();
+
+    // ❗ (если есть метод — лучше вызвать)
+    // speedPlot->RemoveAllDataSets();
+
+    // ❗ добавляем заново
+    speedPlot->AddDataSet(*speedDataSet);
+
+    // обновляем оси
+    speedPlot->SetupAxes(
+        0.f,
+        static_cast<float>(HISTOGRAM_BINS),
+        0.f,
+        maxY,
+        1.f,
+        maxY / 5.f,
+        sf::Color(180, 180, 180)
+    );
+
+    speedPlot->GenerateVertices();
 }

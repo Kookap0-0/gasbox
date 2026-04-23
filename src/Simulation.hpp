@@ -5,6 +5,11 @@
 #include "ParticleSoA.hpp"
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include <SFGraphing/PlotDataSet.h>
+#include <SFGraphing/SFPlot.h>
+#include <memory>
+
+using namespace csrc;
 
 class Simulation
 {
@@ -30,16 +35,21 @@ private:
     int currentFPS = 0;
 
     // Гистограмма скоростей
-    static constexpr int HISTOGRAM_BINS = 30;       // количество столбцов
-    static constexpr float MAX_SPEED = 100.f;       // максимальная скорость (можно подобрать)
-    std::vector<int> speedCounts;                   // количество частиц в каждом бине
-    sf::RectangleShape histogramBars[HISTOGRAM_BINS]; // столбцы гистограммы
-    sf::Text histogramTitle;                        // заголовок
-    float histogramUpdateTimer = 0.f; 
+    std::vector<float> histogramX;        // Значения по оси X (центры "корзин")
+    std::vector<float> histogramY;        // Значения по оси Y (количество частиц)
+    std::unique_ptr<PlotDataSet> speedDataSet;
+    std::unique_ptr<SFPlot> speedPlot;                    // Объект самого графика
+    float histogramUpdateTimer = 0.f;     // Таймер для обновления (как для FPS)
+    static constexpr int HISTOGRAM_BINS = 10; // Количество столбцов
+    static constexpr float MAX_SPEED = 100.f; // Максимальная скорость на графике
+    static constexpr float FIXED_Y_MAX = 500.f; 
+
 
     // Вспомогательные методы
     void buildGrid();
     void resolveCollisions();
+
+    sf::RectangleShape plotPanel;
 
 public:
     Simulation(unsigned int count);
@@ -47,4 +57,5 @@ public:
     void render(sf::RenderWindow& window);
     void resolveCollision(size_t i, size_t j);
     void updateFPS(float dt);
+    void updateHistogram(float dt);
 };

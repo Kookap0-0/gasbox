@@ -3,10 +3,10 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1400, 1000), "Gasbox");
+    sf::RenderWindow window(sf::VideoMode(1800, 1000), "Gasbox");
     window.setVerticalSyncEnabled(true); // вместо setFramerateLimit
 
-    Simulation sim(1000);
+    Simulation sim(5000);
 
     const float dt = 1.f / 120.f;     // фиксированный шаг физики
     const float maxFrameTime = 0.25f; // защита от скачков (250 мс)
@@ -56,6 +56,7 @@ int main()
 
         // 4️ Отрисовка
         sim.updateFPS(frameTime);
+        sim.updateHistogram(frameTime);
         window.clear();
         sim.render(window);
         window.display();

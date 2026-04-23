@@ -215,6 +215,12 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//build sample program.(Default:ON)
+ENABLE_SAMPLE:BOOL=ON
+
+//Dependencies for the target
+SFGraphing_LIB_DEPENDS:STATIC=general;sfml-graphics;general;sfml-window;general;sfml-system;
+
 //The directory containing a CMake configuration file for SFML.
 SFML_DIR:PATH=/usr/lib64/cmake/SFML
 
@@ -229,6 +235,15 @@ gasbox_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 gasbox_SOURCE_DIR:STATIC=/home/reyn/repos/gasbox
+
+//Value Computed by CMake
+graphing_BINARY_DIR:STATIC=/home/reyn/repos/gasbox/build-linux/libs/SFGraphing
+
+//Value Computed by CMake
+graphing_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+graphing_SOURCE_DIR:STATIC=/home/reyn/repos/gasbox/libs/SFGraphing
 
 
 ########################
