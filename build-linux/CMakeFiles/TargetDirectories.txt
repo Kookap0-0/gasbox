@@ -1,3 +1,14 @@
 /home/reyn/repos/gasbox/build-linux/CMakeFiles/gasbox.dir
 /home/reyn/repos/gasbox/build-linux/CMakeFiles/edit_cache.dir
 /home/reyn/repos/gasbox/build-linux/CMakeFiles/rebuild_cache.dir
+/home/reyn/repos/gasbox/build-linux/CMakeFiles/list_install_components.dir
+/home/reyn/repos/gasbox/build-linux/CMakeFiles/install.dir
+/home/reyn/repos/gasbox/build-linux/CMakeFiles/install/local.dir
+/home/reyn/repos/gasbox/build-linux/CMakeFiles/install/strip.dir
+/home/reyn/repos/gasbox/build-linux/libs/imgui-sfml/CMakeFiles/ImGui-SFML.dir
+/home/reyn/repos/gasbox/build-linux/libs/imgui-sfml/CMakeFiles/edit_cache.dir
+/home/reyn/repos/gasbox/build-linux/libs/imgui-sfml/CMakeFiles/rebuild_cache.dir
+/home/reyn/repos/gasbox/build-linux/libs/imgui-sfml/CMakeFiles/list_install_components.dir
+/home/reyn/repos/gasbox/build-linux/libs/imgui-sfml/CMakeFiles/install.dir
+/home/reyn/repos/gasbox/build-linux/libs/imgui-sfml/CMakeFiles/install/local.dir
+/home/reyn/repos/gasbox/build-linux/libs/imgui-sfml/CMakeFiles/install/strip.dir

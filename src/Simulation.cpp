@@ -5,79 +5,19 @@
 
 Simulation::Simulation(unsigned int count)
     : particles(count),
-      vertices(sf::Points),
+      vertices(sf::PrimitiveType::Points),
       box(50.f, 750.f, 50.f, 550.f)
 {
-    // --- FPS ---
-    if (!font.loadFromFile("fonts/Sekuya-Regular.ttf")) {
-        std::cerr << "Failed to load font\n";
-    }
-
-    fpsText.setFont(font);
-    fpsText.setCharacterSize(18);
-    fpsText.setFillColor(sf::Color(220, 220, 220));
-    fpsText.setPosition(10.f, 10.f);
-
-    // --- Гистограмма ---
-    histogramX.resize(HISTOGRAM_BINS);
-    histogramY.resize(HISTOGRAM_BINS);
-
-    for (int i = 0; i < HISTOGRAM_BINS; ++i) {
-        histogramX[i] = static_cast<float>(i);
-        histogramY[i] = 0.f;
-    }
-
-    speedDataSet = std::make_unique<PlotDataSet>(
-        histogramX,
-        histogramY,
-        sf::Color(80, 220, 255),   // мягкий голубой
-        "Speed Distribution",
-        PlottingType::BARS
-    );
-
-    speedPlot = std::make_unique<SFPlot>(
-        sf::Vector2f(800.f, 20.f),     // позиция
-        sf::Vector2f(580.f, 560.f),    // размер
-        40.f,                          // отступы
-        font,
-        "Speed",
-        "Count"
-    );
-
-    speedPlot->AddDataSet(*speedDataSet);
-
-    // фиксированный масштаб (не дергается)
-    speedPlot->SetupAxes(
-        0.f,
-        static_cast<float>(HISTOGRAM_BINS),
-        0.f,
-        100.f,
-        1.f,
-        20.f,
-        sf::Color(180, 180, 180)
-    );
-
-    speedPlot->GenerateVertices();
-
-    // --- Панель под график ---
-    plotPanel.setPosition(790.f, 10.f);
-    plotPanel.setSize({600.f, 580.f});
-    plotPanel.setFillColor(sf::Color(18, 18, 22));
-    plotPanel.setOutlineThickness(2.f);
-    plotPanel.setOutlineColor(sf::Color(60, 60, 70));
-
-    // --- Сетка ---
+ 
+    // ... остальной код (сетка, частицы) ...
     float boxWidth = box.getRight() - box.getLeft();
     float boxHeight = box.getBottom() - box.getTop();
-
     gridWidth = static_cast<int>(std::ceil(boxWidth / cellSize));
     gridHeight = static_cast<int>(std::ceil(boxHeight / cellSize));
     grid.resize(gridWidth * gridHeight);
 
-    // --- Частицы ---
     std::random_device rd;
     std::mt19937 rng(rd());
-
     std::uniform_real_distribution<float> posX(box.getLeft() + 20.f, box.getRight() - 20.f);
     std::uniform_real_distribution<float> posY(box.getTop() + 20.f, box.getBottom() - 20.f);
     std::uniform_real_distribution<float> vel(-50.f, 50.f);
@@ -90,23 +30,20 @@ Simulation::Simulation(unsigned int count)
     }
 
     vertices.resize(count);
+    histY.resize(HIST_BINS, 0.f);
 }
 
 void Simulation::buildGrid()
 {
-    // Очищаем все ячейки
     for (auto& cell : grid) cell.clear();
 
     float left = box.getLeft();
     float top = box.getTop();
 
-    for (size_t i = 0; i < particles.size(); ++i)
-    {
+    for (size_t i = 0; i < particles.size(); ++i) {
         int cx = static_cast<int>((particles.posX[i] - left) / cellSize);
         int cy = static_cast<int>((particles.posY[i] - top) / cellSize);
-        // Проверяем, что индексы в пределах сетки
-        if (cx >= 0 && cx < gridWidth && cy >= 0 && cy < gridHeight)
-        {
+        if (cx >= 0 && cx < gridWidth && cy >= 0 && cy < gridHeight) {
             int index = cx + cy * gridWidth;
             grid[index].push_back(static_cast<int>(i));
         }
@@ -115,36 +52,27 @@ void Simulation::buildGrid()
 
 void Simulation::resolveCollisions()
 {
-    for (int iter = 0; iter < solverIterations; ++iter)
-    {
-        for (int cy = 0; cy < gridHeight; ++cy)
-        {
-            for (int cx = 0; cx < gridWidth; ++cx)
-            {
+    for (int iter = 0; iter < solverIterations; ++iter) {
+        for (int cy = 0; cy < gridHeight; ++cy) {
+            for (int cx = 0; cx < gridWidth; ++cx) {
                 int key = cx + cy * gridWidth;
-
-                // 1. Столкновения внутри текущей ячейки (попарно, i < j)
                 const auto& cell = grid[key];
+
+                // внутри ячейки
                 for (size_t a = 0; a < cell.size(); ++a)
                     for (size_t b = a + 1; b < cell.size(); ++b)
                         resolveCollision(cell[a], cell[b]);
 
-                // 2. Столкновения с соседними ячейками (только правые и нижние, чтобы не дублировать)
-                for (int dy = -1; dy <= 1; ++dy)
-                {
-                    for (int dx = -1; dx <= 1; ++dx)
-                    {
-                        // Пропускаем текущую ячейку (уже обработана)
+                // соседние ячейки (без дублей)
+                for (int dy = -1; dy <= 1; ++dy) {
+                    for (int dx = -1; dx <= 1; ++dx) {
                         if (dx == 0 && dy == 0) continue;
-                        // Обрабатываем только половину направлений: вправо, вниз, вниз-вправо, вниз-влево
                         if (dx < 0 || (dx == 0 && dy < 0)) continue;
-
                         int nx = cx + dx;
                         int ny = cy + dy;
-                        if (nx >= 0 && nx < gridWidth && ny >= 0 && ny < gridHeight)
-                        {
-                            int neighborKey = nx + ny * gridWidth;
-                            const auto& neighbor = grid[neighborKey];
+                        if (nx >= 0 && nx < gridWidth && ny >= 0 && ny < gridHeight) {
+                            int nkey = nx + ny * gridWidth;
+                            const auto& neighbor = grid[nkey];
                             for (int i : cell)
                                 for (int j : neighbor)
                                     resolveCollision(i, j);
@@ -171,7 +99,6 @@ void Simulation::resolveCollision(size_t i, size_t j)
     float nx = dx * invDist;
     float ny = dy * invDist;
 
-    // Позиционная коррекция
     float overlap = minDist - dist;
     float correction = overlap * 0.5f;
     particles.posX[i] -= correction * nx;
@@ -179,7 +106,6 @@ void Simulation::resolveCollision(size_t i, size_t j)
     particles.posX[j] += correction * nx;
     particles.posY[j] += correction * ny;
 
-    // Коррекция скорости
     float dvx = particles.velX[i] - particles.velX[j];
     float dvy = particles.velY[i] - particles.velY[j];
     float dot = dvx * nx + dvy * ny;
@@ -198,33 +124,26 @@ void Simulation::update(float dt)
 {
     float subDt = dt / substeps;
 
-    for (int step = 0; step < substeps; ++step)
-    {
-        // 1. Интеграция движения
-        for (size_t i = 0; i < particles.size(); ++i)
-        {
+    for (int step = 0; step < substeps; ++step) {
+        // движение
+        for (size_t i = 0; i < particles.size(); ++i) {
             particles.posX[i] += particles.velX[i] * subDt;
             particles.posY[i] += particles.velY[i] * subDt;
         }
 
-        // 2. Построение пространственной сетки
         buildGrid();
-
-        // 3. Разрешение столкновений между частицами
         resolveCollisions();
 
-        // 4. Столкновения со стенами
-        for (size_t i = 0; i < particles.size(); ++i)
-        {
+        // стены
+        for (size_t i = 0; i < particles.size(); ++i) {
             box.handleCollision(particles.posX[i], particles.posY[i],
                                 particles.velX[i], particles.velY[i],
                                 particles.radius[i]);
         }
     }
 
-    // 5. Обновление вершин для отрисовки
-    for (size_t i = 0; i < particles.size(); ++i)
-    {
+    // обновление вершин для отрисовки
+    for (size_t i = 0; i < particles.size(); ++i) {
         vertices[i].position = { particles.posX[i], particles.posY[i] };
         vertices[i].color = sf::Color::White;
     }
@@ -232,19 +151,9 @@ void Simulation::update(float dt)
 
 void Simulation::render(sf::RenderWindow& window)
 {
-    // частицы
     window.draw(vertices);
     box.render(window);
-
-    // панель графика (фон)
-    window.draw(plotPanel);
-
-    // сам график
-    if (speedPlot)
-        window.draw(*speedPlot);
-
-    // FPS поверх всего
-    window.draw(fpsText);
+    //window.draw(fpsText);
 }
 
 void Simulation::updateFPS(float dt) {
@@ -252,71 +161,46 @@ void Simulation::updateFPS(float dt) {
     frameCount++;
     if (fpsUpdateTimer >= 1.f) {
         currentFPS = frameCount;
-        fpsText.setString("FPS: " + std::to_string(currentFPS));
         frameCount = 0;
         fpsUpdateTimer = 0.f;
     }
 }
 
+void Simulation::updateHistogram(float dt) {
+    histUpdateTimer += dt;
+    if (histUpdateTimer < 0.5f) return; // обновляем 2 раза в секунду
+    histUpdateTimer = 0.f;
 
-void Simulation::updateHistogram(float dt)
-{
-    histogramUpdateTimer += dt;
-    if (histogramUpdateTimer < 0.3f) return;
-    histogramUpdateTimer = 0.f;
-
-    std::fill(histogramY.begin(), histogramY.end(), 0.f);
-
-    float binWidth = MAX_SPEED / HISTOGRAM_BINS;
+    std::fill(histY.begin(), histY.end(), 0.f);
+    float binWidth = MAX_SPEED / HIST_BINS;
 
     for (size_t i = 0; i < particles.size(); ++i) {
-        float speed = std::sqrt(
-            particles.velX[i] * particles.velX[i] +
-            particles.velY[i] * particles.velY[i]
-        );
-
+        float speed = std::hypot(particles.velX[i], particles.velY[i]);
         int bin = static_cast<int>(speed / binWidth);
-        if (bin < 0) bin = 0;
-        if (bin >= HISTOGRAM_BINS) bin = HISTOGRAM_BINS - 1;
-
-        histogramY[bin]++;
+        if (bin >= HIST_BINS) bin = HIST_BINS - 1;
+        if (bin >= 0) histY[bin]++;
     }
+}
 
-    // --- вычисляем максимум ---
-    float maxY = 1.f;
-    for (float v : histogramY)
-        if (v > maxY) maxY = v;
+std::vector<float> Simulation::getTheoreticalDistribution() const {
+    // Для двумерного газа: f(v) = (m / (kT)) * v * exp(-m*v^2/(2kT))
+    // Приравниваем kT = <E_k> (средняя кинетическая энергия), m = 1
+    float totalKE = 0.f;
+    for (size_t i = 0; i < particles.size(); ++i) {
+        float v2 = particles.velX[i]*particles.velX[i] + particles.velY[i]*particles.velY[i];
+        totalKE += 0.5f * v2;
+    }
+    float avgKE = totalKE / particles.size();  // это и есть kT (при m=1, kB=1)
+    float kT = avgKE;
+    if (kT < 0.01f) kT = 0.01f;
 
-    maxY *= 1.2f;
-
-    // ❗ КЛЮЧ: пересоздаём dataset
-    speedDataSet = std::make_unique<PlotDataSet>(
-        histogramX,
-        histogramY,
-        sf::Color(80, 220, 255, 200),
-        "",
-        PlottingType::BARS
-    );
-
-    // ❗ очищаем график полностью
-    speedPlot->ClearVertices();
-
-    // ❗ (если есть метод — лучше вызвать)
-    // speedPlot->RemoveAllDataSets();
-
-    // ❗ добавляем заново
-    speedPlot->AddDataSet(*speedDataSet);
-
-    // обновляем оси
-    speedPlot->SetupAxes(
-        0.f,
-        static_cast<float>(HISTOGRAM_BINS),
-        0.f,
-        maxY,
-        1.f,
-        maxY / 5.f,
-        sf::Color(180, 180, 180)
-    );
-
-    speedPlot->GenerateVertices();
+    float binWidth = MAX_SPEED / HIST_BINS;
+    std::vector<float> theory(HIST_BINS, 0.f);
+    for (int i = 0; i < HIST_BINS; ++i) {
+        float v = (i + 0.5f) * binWidth; // средняя скорость в бине
+        float f = (1.f / kT) * v * std::exp(-v*v / (2.f * kT));
+        // Нормируем на количество частиц и ширину бина, чтобы сравнивать с гистограммой
+        theory[i] = f * particles.size() * binWidth;
+    }
+    return theory;
 }

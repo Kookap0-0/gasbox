@@ -4,30 +4,35 @@ project(gasbox)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if(WIN32 OR MINGW)
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libgcc -static-libstdc++")
-endif()
+find_package(SFML 3 COMPONENTS Graphics Window System REQUIRED)
 
-find_package(SFML COMPONENTS graphics window system REQUIRED)
+# Путь к ImGui
+set(IMGUI_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/imgui")
 
-# --- Добавляем исходники SFGraphing (убедитесь, что пути верные) ---
-file(GLOB SFGRAPHING_SOURCES "libs/SFGraphing/src/*.cpp")
+# Подключаем ImGui-SFML (он найдёт ImGui через IMGUI_DIR)
+add_subdirectory(libs/imgui-sfml)
 
+# Добавляем в исполняемый файл все ваши исходники И файлы ImGui
 add_executable(gasbox
     src/main.cpp
     src/Box.cpp
     src/Simulation.cpp
     src/ParticleSoA.cpp
-    ${SFGRAPHING_SOURCES}
+    ${IMGUI_DIR}/imgui.cpp
+    ${IMGUI_DIR}/imgui_draw.cpp
+    ${IMGUI_DIR}/imgui_tables.cpp
+    ${IMGUI_DIR}/imgui_widgets.cpp
 )
 
-target_link_libraries(gasbox
-    sfml-graphics
-    sfml-window
-    sfml-system
-)
-
+# Добавляем пути для поиска заголовков
 target_include_directories(gasbox PRIVATE
-    ${SFML_INCLUDE_DIR}
-    "libs/SFGraphing/include"   # чтобы найти заголовки SFGraphing
+    ${IMGUI_DIR}
+    libs/imgui-sfml
+)
+
+target_link_libraries(gasbox PRIVATE
+    SFML::Graphics
+    SFML::Window
+    SFML::System
+    ImGui-SFML::ImGui-SFML   # это цель из imgui-sfml
 )

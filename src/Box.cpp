@@ -3,7 +3,7 @@
 Box::Box(float l, float r, float t, float b)
     : left(l), right(r), top(t), bottom(b)
 {
-    border.setPosition(left, top);
+    border.setPosition({left, top});
     border.setSize({right - left, bottom - top});
 
     border.setFillColor(sf::Color::Transparent);
