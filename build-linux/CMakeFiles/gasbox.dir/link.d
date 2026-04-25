@@ -6,6 +6,7 @@ gasbox: \
   CMakeFiles/gasbox.dir/src/Box.cpp.o \
   CMakeFiles/gasbox.dir/src/Simulation.cpp.o \
   CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.o \
+  CMakeFiles/gasbox.dir/src/Plot.cpp.o \
   CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o \
   CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o \
   CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o \
@@ -81,6 +82,8 @@ CMakeFiles/gasbox.dir/src/Box.cpp.o:
 CMakeFiles/gasbox.dir/src/Simulation.cpp.o:
 
 CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.o:
+
+CMakeFiles/gasbox.dir/src/Plot.cpp.o:
 
 CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o:
 

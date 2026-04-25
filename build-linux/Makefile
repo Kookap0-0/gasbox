@@ -379,6 +379,30 @@ src/ParticleSoA.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.s
 .PHONY : src/ParticleSoA.cpp.s
 
+src/Plot.o: src/Plot.cpp.o
+.PHONY : src/Plot.o
+
+# target to build an object file
+src/Plot.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/src/Plot.cpp.o
+.PHONY : src/Plot.cpp.o
+
+src/Plot.i: src/Plot.cpp.i
+.PHONY : src/Plot.i
+
+# target to preprocess a source file
+src/Plot.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/src/Plot.cpp.i
+.PHONY : src/Plot.cpp.i
+
+src/Plot.s: src/Plot.cpp.s
+.PHONY : src/Plot.s
+
+# target to generate assembly for a file
+src/Plot.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/src/Plot.cpp.s
+.PHONY : src/Plot.cpp.s
+
 src/Simulation.o: src/Simulation.cpp.o
 .PHONY : src/Simulation.o
 
@@ -465,6 +489,9 @@ help:
 	@echo "... src/ParticleSoA.o"
 	@echo "... src/ParticleSoA.i"
 	@echo "... src/ParticleSoA.s"
+	@echo "... src/Plot.o"
+	@echo "... src/Plot.i"
+	@echo "... src/Plot.s"
 	@echo "... src/Simulation.o"
 	@echo "... src/Simulation.i"
 	@echo "... src/Simulation.s"

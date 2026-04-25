@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Simulation.hpp"
+#include "Plot.hpp"
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include "implot.h"
@@ -61,6 +62,7 @@ int main()
     ImGui::StyleColorsDark();
 
     Simulation sim(N);
+    Plot plot(sim);
     
     
 
@@ -110,20 +112,20 @@ int main()
         if (steps == maxSteps)
             accumulator = 0.f;
 
-        sim.updateHistogram(frameTime);
+        plot.updateHistogram(frameTime, sim.getParticles(), sim.getCurrentTemperature());
         ImGui::SFML::Update(window, sf::seconds(frameTime));
 
-        const auto& x = sim.getHistogramX();
-        const auto& current = sim.getHistogramCurrent();
-        const auto& total = sim.getHistogramTotal();
-        const auto& tx = sim.getTheoreticalX();
-        const auto& ty = sim.getTheoreticalY();
+        const auto& x = plot.getHistogramX();
+        const auto& current = plot.getHistogramCurrent();
+        const auto& total = plot.getHistogramTotal();
+        const auto& tx = plot.getTheoreticalX();
+        const auto& ty = plot.getTheoreticalY();
 
-        std::vector<float> currentDensity = ToDensity(current, static_cast<float>(N), sim.getBinWidth());
+        std::vector<float> currentDensity = ToDensity(current, static_cast<float>(N), plot.getBinWidth());
         std::vector<float> totalDensity = ToDensity(
             total,
-            static_cast<float>(N) * static_cast<float>(std::max<std::size_t>(1, sim.getHistogramSamples())),
-            sim.getBinWidth()
+            static_cast<float>(N) * static_cast<float>(std::max<std::size_t>(1, plot.getHistogramSamples())),
+            plot.getBinWidth()
         );
         const std::vector<float>& theoryDensity = ty;
 
@@ -138,8 +140,8 @@ int main()
             temperatureInput = actualT;
 
             plotScale = MakeScale(actualT);
-            sim.setPlotRange(static_cast<float>(plotScale.xMax));
-            sim.resetHistogramStatistics();
+            plot.setPlotRange(static_cast<float>(plotScale.xMax));
+            plot.resetHistogramStatistics();
         }
 
 
@@ -184,7 +186,7 @@ int main()
                     x.data(),
                     currentDensity.data(),
                     static_cast<int>(x.size()),
-                    sim.getBinWidth() * 0.9f,
+                    plot.getBinWidth() * 0.9f,
                     barSpec
                 );
 
@@ -220,7 +222,7 @@ int main()
                     x.data(),
                     totalDensity.data(),
                     static_cast<int>(x.size()),
-                    sim.getBinWidth() * 0.9f,
+                    plot.getBinWidth() * 0.9f,
                     barSpec
                 );
 

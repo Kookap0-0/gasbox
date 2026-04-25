@@ -16,6 +16,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/reyn/repos/gasbox/libs/implot/implot_items.cpp" "CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o" "gcc" "CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o.d"
   "/home/reyn/repos/gasbox/src/Box.cpp" "CMakeFiles/gasbox.dir/src/Box.cpp.o" "gcc" "CMakeFiles/gasbox.dir/src/Box.cpp.o.d"
   "/home/reyn/repos/gasbox/src/ParticleSoA.cpp" "CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.o" "gcc" "CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.o.d"
+  "/home/reyn/repos/gasbox/src/Plot.cpp" "CMakeFiles/gasbox.dir/src/Plot.cpp.o" "gcc" "CMakeFiles/gasbox.dir/src/Plot.cpp.o.d"
   "/home/reyn/repos/gasbox/src/Simulation.cpp" "CMakeFiles/gasbox.dir/src/Simulation.cpp.o" "gcc" "CMakeFiles/gasbox.dir/src/Simulation.cpp.o.d"
   "/home/reyn/repos/gasbox/src/main.cpp" "CMakeFiles/gasbox.dir/src/main.cpp.o" "gcc" "CMakeFiles/gasbox.dir/src/main.cpp.o.d"
   "" "gasbox" "gcc" "CMakeFiles/gasbox.dir/link.d"

@@ -16,6 +16,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/gasbox.dir/src/Box.cpp.o.d"
   "CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.o"
   "CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.o.d"
+  "CMakeFiles/gasbox.dir/src/Plot.cpp.o"
+  "CMakeFiles/gasbox.dir/src/Plot.cpp.o.d"
   "CMakeFiles/gasbox.dir/src/Simulation.cpp.o"
   "CMakeFiles/gasbox.dir/src/Simulation.cpp.o.d"
   "CMakeFiles/gasbox.dir/src/main.cpp.o"

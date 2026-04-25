@@ -294,6 +294,7 @@ CMakeFiles/gasbox.dir/src/main.cpp.o: \
  /home/reyn/repos/gasbox/src/Simulation.hpp \
  /home/reyn/repos/gasbox/src/Box.hpp \
  /home/reyn/repos/gasbox/src/ParticleSoA.hpp \
+ /home/reyn/repos/gasbox/src/Plot.hpp \
  /home/reyn/repos/gasbox/libs/imgui/imgui.h \
  /home/reyn/repos/gasbox/libs/imgui-sfml/imconfig-SFML.h \
  /home/reyn/repos/gasbox/libs/imgui-sfml/imgui-SFML_export.h \

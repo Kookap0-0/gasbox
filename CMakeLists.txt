@@ -20,6 +20,7 @@ add_executable(gasbox
     src/Box.cpp
     src/Simulation.cpp
     src/ParticleSoA.cpp
+    src/Plot.cpp
 
     # ImGui
     ${IMGUI_DIR}/imgui.cpp

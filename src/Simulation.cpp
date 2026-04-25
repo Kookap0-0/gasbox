@@ -32,24 +32,6 @@ Simulation::Simulation(unsigned int count)
     }
 
     vertices.resize(count);
-
-    // histogram
-    histX.resize(HIST_BINS);
-    histY.resize(HIST_BINS, 0.f);
-    histTotal.resize(HIST_BINS, 0.f);
-
-    float binWidth = maxSpeed / HIST_BINS;
-    for (int i = 0; i < HIST_BINS; ++i) {
-        histX[i] = (i + 0.5f) * binWidth;
-    }
-
-    theoryX.resize(THEORY_POINTS);
-    theoryY.resize(THEORY_POINTS, 0.f);
-
-    for (int i = 0; i < THEORY_POINTS; ++i) {
-        theoryX[i] = maxSpeed * float(i) / float(THEORY_POINTS - 1);
-    }
-    rebuildHistogramAxes();
 }
 
 void Simulation::buildGrid()
@@ -192,64 +174,6 @@ void Simulation::render(sf::RenderWindow& window)
     box.render(window);
 }
 
-void Simulation::updateFPS(float dt)
-{
-    fpsUpdateTimer += dt;
-    frameCount++;
-
-    if (fpsUpdateTimer >= 1.f) {
-        currentFPS = frameCount;
-        frameCount = 0;
-        fpsUpdateTimer = 0.f;
-    }
-}
-
-void Simulation::updateHistogram(float dt)
-{
-    histUpdateTimer += dt;
-    if (histUpdateTimer < 0.5f) return;
-    histUpdateTimer = 0.f;
-
-    std::fill(histY.begin(), histY.end(), 0.f);
-
-    float binWidth = maxSpeed / HIST_BINS;
-
-    // current histogram
-    for (size_t i = 0; i < particles.size(); ++i) {
-        float speed = std::hypot(particles.velX[i], particles.velY[i]);
-
-        int bin = static_cast<int>(speed / binWidth);
-        if (bin < 0) bin = 0;
-        if (bin >= HIST_BINS) bin = HIST_BINS - 1;
-
-        histY[bin]++;
-    }
-
-    // accumulate over time
-    for (int i = 0; i < HIST_BINS; ++i) {
-        histTotal[i] += histY[i];
-    }
-
-    ++histSamples; // ВАЖНО: без этого второй график будет "расти"
-
-    // Maxwell-Boltzmann curve as pdf
-    float totalKE = 0.f;
-    for (size_t i = 0; i < particles.size(); ++i) {
-        float v2 = particles.velX[i] * particles.velX[i] +
-                   particles.velY[i] * particles.velY[i];
-        totalKE += 0.5f * v2;
-    }
-
-    float kT = totalKE / std::max<size_t>(1, particles.size());
-    if (kT < 0.01f) kT = 0.01f;
-
-    for (int i = 0; i < THEORY_POINTS; ++i) {
-        float v = theoryX[i];
-        float pdf = (1.f / kT) * v * std::exp(-v * v / (2.f * kT));
-        theoryY[i] = pdf;
-    }
-}
-
 
 float Simulation::getCurrentTemperature() const
 {
@@ -280,29 +204,4 @@ void Simulation::setTemperature(float targetT)
 }
 
 
-void Simulation::rebuildHistogramAxes()
-{
-    float binWidth = maxSpeed / HIST_BINS;
 
-    for (int i = 0; i < HIST_BINS; ++i) {
-        histX[i] = (i + 0.5f) * binWidth;
-    }
-
-    for (int i = 0; i < THEORY_POINTS; ++i) {
-        theoryX[i] = maxSpeed * float(i) / float(THEORY_POINTS - 1);
-    }
-}
-
-void Simulation::setPlotRange(float newMaxSpeed)
-{
-    maxSpeed = std::max(newMaxSpeed, 1.f);
-    rebuildHistogramAxes();
-}
-
-void Simulation::resetHistogramStatistics()
-{
-    std::fill(histY.begin(), histY.end(), 0.f);
-    std::fill(histTotal.begin(), histTotal.end(), 0.f);
-    histSamples = 0;
-    histUpdateTimer = 0.5f;
-}

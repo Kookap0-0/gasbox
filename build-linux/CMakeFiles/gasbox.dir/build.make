@@ -128,10 +128,24 @@ CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/reyn/repos/gasbox/src/ParticleSoA.cpp -o CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.s
 
+CMakeFiles/gasbox.dir/src/Plot.cpp.o: CMakeFiles/gasbox.dir/flags.make
+CMakeFiles/gasbox.dir/src/Plot.cpp.o: /home/reyn/repos/gasbox/src/Plot.cpp
+CMakeFiles/gasbox.dir/src/Plot.cpp.o: CMakeFiles/gasbox.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/gasbox.dir/src/Plot.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gasbox.dir/src/Plot.cpp.o -MF CMakeFiles/gasbox.dir/src/Plot.cpp.o.d -o CMakeFiles/gasbox.dir/src/Plot.cpp.o -c /home/reyn/repos/gasbox/src/Plot.cpp
+
+CMakeFiles/gasbox.dir/src/Plot.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/gasbox.dir/src/Plot.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/reyn/repos/gasbox/src/Plot.cpp > CMakeFiles/gasbox.dir/src/Plot.cpp.i
+
+CMakeFiles/gasbox.dir/src/Plot.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/gasbox.dir/src/Plot.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/reyn/repos/gasbox/src/Plot.cpp -o CMakeFiles/gasbox.dir/src/Plot.cpp.s
+
 CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o: CMakeFiles/gasbox.dir/flags.make
 CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o: /home/reyn/repos/gasbox/libs/imgui/imgui.cpp
 CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o: CMakeFiles/gasbox.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o -MF CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o.d -o CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o -c /home/reyn/repos/gasbox/libs/imgui/imgui.cpp
 
 CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.i: cmake_force
@@ -145,7 +159,7 @@ CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.s: cmake_force
 CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o: CMakeFiles/gasbox.dir/flags.make
 CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o: /home/reyn/repos/gasbox/libs/imgui/imgui_draw.cpp
 CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o: CMakeFiles/gasbox.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o -MF CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o.d -o CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o -c /home/reyn/repos/gasbox/libs/imgui/imgui_draw.cpp
 
 CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.i: cmake_force
@@ -159,7 +173,7 @@ CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.s: cmake_force
 CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o: CMakeFiles/gasbox.dir/flags.make
 CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o: /home/reyn/repos/gasbox/libs/imgui/imgui_tables.cpp
 CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o: CMakeFiles/gasbox.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o -MF CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o.d -o CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o -c /home/reyn/repos/gasbox/libs/imgui/imgui_tables.cpp
 
 CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.i: cmake_force
@@ -173,7 +187,7 @@ CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.s: cmake_force
 CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o: CMakeFiles/gasbox.dir/flags.make
 CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o: /home/reyn/repos/gasbox/libs/imgui/imgui_widgets.cpp
 CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o: CMakeFiles/gasbox.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o -MF CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o.d -o CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o -c /home/reyn/repos/gasbox/libs/imgui/imgui_widgets.cpp
 
 CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.i: cmake_force
@@ -187,7 +201,7 @@ CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.s: cmake_force
 CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o: CMakeFiles/gasbox.dir/flags.make
 CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o: /home/reyn/repos/gasbox/libs/implot/implot.cpp
 CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o: CMakeFiles/gasbox.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o -MF CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o.d -o CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o -c /home/reyn/repos/gasbox/libs/implot/implot.cpp
 
 CMakeFiles/gasbox.dir/libs/implot/implot.cpp.i: cmake_force
@@ -201,7 +215,7 @@ CMakeFiles/gasbox.dir/libs/implot/implot.cpp.s: cmake_force
 CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o: CMakeFiles/gasbox.dir/flags.make
 CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o: /home/reyn/repos/gasbox/libs/implot/implot_items.cpp
 CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o: CMakeFiles/gasbox.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o -MF CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o.d -o CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o -c /home/reyn/repos/gasbox/libs/implot/implot_items.cpp
 
 CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.i: cmake_force
@@ -218,6 +232,7 @@ gasbox_OBJECTS = \
 "CMakeFiles/gasbox.dir/src/Box.cpp.o" \
 "CMakeFiles/gasbox.dir/src/Simulation.cpp.o" \
 "CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.o" \
+"CMakeFiles/gasbox.dir/src/Plot.cpp.o" \
 "CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o" \
 "CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o" \
 "CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o" \
@@ -232,6 +247,7 @@ gasbox: CMakeFiles/gasbox.dir/src/main.cpp.o
 gasbox: CMakeFiles/gasbox.dir/src/Box.cpp.o
 gasbox: CMakeFiles/gasbox.dir/src/Simulation.cpp.o
 gasbox: CMakeFiles/gasbox.dir/src/ParticleSoA.cpp.o
+gasbox: CMakeFiles/gasbox.dir/src/Plot.cpp.o
 gasbox: CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o
 gasbox: CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o
 gasbox: CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o
@@ -246,7 +262,7 @@ gasbox: /usr/local/lib64/libsfml-window.so.3.0.0
 gasbox: /usr/local/lib64/libsfml-system.so.3.0.0
 gasbox: /usr/lib64/libGL.so
 gasbox: CMakeFiles/gasbox.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable gasbox"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable gasbox"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gasbox.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

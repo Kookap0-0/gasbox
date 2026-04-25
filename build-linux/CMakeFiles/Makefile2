@@ -107,12 +107,12 @@ libs/imgui-sfml/clean: libs/imgui-sfml/CMakeFiles/ImGui-SFML.dir/clean
 CMakeFiles/gasbox.dir/all: libs/imgui-sfml/CMakeFiles/ImGui-SFML.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=9,10,11,12,13,14,15,16,17,18,19 "Built target gasbox"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=9,10,11,12,13,14,15,16,17,18,19,20 "Built target gasbox"
 .PHONY : CMakeFiles/gasbox.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/gasbox.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/reyn/repos/gasbox/build-linux/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/reyn/repos/gasbox/build-linux/CMakeFiles 20
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/gasbox.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/reyn/repos/gasbox/build-linux/CMakeFiles 0
 .PHONY : CMakeFiles/gasbox.dir/rule
@@ -124,7 +124,7 @@ gasbox: CMakeFiles/gasbox.dir/rule
 # codegen rule for target.
 CMakeFiles/gasbox.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=9,10,11,12,13,14,15,16,17,18,19 "Finished codegen for target gasbox"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=9,10,11,12,13,14,15,16,17,18,19,20 "Finished codegen for target gasbox"
 .PHONY : CMakeFiles/gasbox.dir/codegen
 
 # clean rule for target.
