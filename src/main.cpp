@@ -2,30 +2,84 @@
 #include "Simulation.hpp"
 #include "imgui.h"
 #include "imgui-SFML.h"
-#include <algorithm>
+#include "implot.h"
+
 #include <optional>
+#include <algorithm>
+#include <numeric>
+#include <vector>
+#include <cmath>
+
+struct PlotScale {
+    double xMax;
+    double yMax;
+};
+
+static PlotScale MakeScale(float T)
+{
+    T = std::max(T, 0.0001f);
+
+    // X ~ sqrt(T)
+    double xMax = 6.0 * std::sqrt(T);
+
+    // для 2D Maxwell пик ~ exp(-1/2)/sqrt(T)
+    double yMax = 1.35 * std::exp(-0.5) / std::sqrt(T);
+
+    return { xMax, yMax };
+}
+
+
+static std::vector<float> ToDensity(const std::vector<float>& counts, float totalCount, float binWidth)
+{
+    std::vector<float> out(counts.size(), 0.f);
+    if (totalCount <= 0.f || binWidth <= 0.f) return out;
+
+    for (size_t i = 0; i < counts.size(); ++i) {
+        out[i] = counts[i] / (totalCount * binWidth);
+    }
+    return out;
+}
+
+static float MaxValue(const std::vector<float>& v)
+{
+    if (v.empty()) return 0.f;
+    return *std::max_element(v.begin(), v.end());
+}
 
 int main()
 {
+    const unsigned int N = 5000;
+    float temperatureInput = 1.0f;
+
     sf::RenderWindow window(sf::VideoMode({1800, 1000}), "Gasbox");
     window.setVerticalSyncEnabled(true);
 
     if (!ImGui::SFML::Init(window))
         return -1;
 
+    ImPlot::CreateContext();
     ImGui::StyleColorsDark();
 
-    Simulation sim(5000);
+    Simulation sim(N);
+    
+    
 
     const float dt = 1.f / 120.f;
     const float maxFrameTime = 0.25f;
     const int maxSteps = 5;
 
-    float warmupElapsed = 0.f;
-    while (warmupElapsed < 1.5f) {
-        sim.update(dt);
-        warmupElapsed += dt;
+    // warmup
+    {
+        float warmup = 0.f;
+        while (warmup < 1.5f) {
+            sim.update(dt);
+            warmup += dt;
+        }
     }
+
+    float currentTemperature = sim.getCurrentTemperature();
+    temperatureInput = currentTemperature;
+    PlotScale plotScale = MakeScale(currentTemperature);
 
     float accumulator = 0.f;
     sf::Clock clock;
@@ -41,8 +95,7 @@ int main()
         }
 
         float frameTime = clock.restart().asSeconds();
-        if (frameTime > maxFrameTime)
-            frameTime = maxFrameTime;
+        frameTime = std::min(frameTime, maxFrameTime);
 
         accumulator += frameTime;
 
@@ -60,67 +113,147 @@ int main()
         sim.updateHistogram(frameTime);
         ImGui::SFML::Update(window, sf::seconds(frameTime));
 
-        const auto& hist = sim.getHistogram();
-        const auto& theory = sim.getTheoreticalDistribution();
+        const auto& x = sim.getHistogramX();
+        const auto& current = sim.getHistogramCurrent();
+        const auto& total = sim.getHistogramTotal();
+        const auto& tx = sim.getTheoreticalX();
+        const auto& ty = sim.getTheoreticalY();
 
-        ImGui::SetNextWindowSize(ImVec2(800.f, 650.f), ImGuiCond_FirstUseEver);
-        ImGui::SetNextWindowPos(ImVec2(1000.f, 20.f), ImGuiCond_FirstUseEver);
+        std::vector<float> currentDensity = ToDensity(current, static_cast<float>(N), sim.getBinWidth());
+        std::vector<float> totalDensity = ToDensity(
+            total,
+            static_cast<float>(N) * static_cast<float>(std::max<std::size_t>(1, sim.getHistogramSamples())),
+            sim.getBinWidth()
+        );
+        const std::vector<float>& theoryDensity = ty;
+
+        ImGui::Begin("Controls");
+
+        ImGui::InputFloat("Temperature", &temperatureInput, 0.1f, 1.0f, "%.3f");
+
+        if (ImGui::Button("Apply temperature")) {
+            sim.setTemperature(temperatureInput);
+
+            float actualT = sim.getCurrentTemperature();
+            temperatureInput = actualT;
+
+            plotScale = MakeScale(actualT);
+            sim.setPlotRange(static_cast<float>(plotScale.xMax));
+            sim.resetHistogramStatistics();
+        }
+
+
+        ImGui::Separator();
+        ImGui::Text("Current T: %.3f", sim.getCurrentTemperature());
+
+        ImGui::End();
+
+        ImGui::SetNextWindowSize(ImVec2(820.f, 920.f), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowPos(ImVec2(960.f, 20.f), ImGuiCond_FirstUseEver);
+
 
         ImGui::Begin("Speed Distribution");
 
         ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
         ImGui::Separator();
+        
 
-        if (!hist.empty() && !theory.empty())
+        if (!currentDensity.empty() && !theoryDensity.empty())
         {
-            float maxHist = *std::max_element(hist.begin(), hist.end());
-            float maxTheory = *std::max_element(theory.begin(), theory.end());
-            float yMax = std::max(maxHist, maxTheory) * 1.1f;
-            if (yMax < 1.f) yMax = 1.f;
+            // Масштаб для верхнего графика — по текущим данным
+            float topMaxY = std::max(MaxValue(currentDensity), MaxValue(theoryDensity)) * 1.2f;
+            float bottomMaxY = std::max(MaxValue(totalDensity), MaxValue(theoryDensity)) * 1.2f;
 
-            ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(0.2f, 0.5f, 1.0f, 0.8f));
-            ImGui::PlotHistogram(
-                "##hist",
-                hist.data(),
-                static_cast<int>(hist.size()),
-                0,
-                "Experimental distribution",
-                0.f,
-                yMax,
-                ImVec2(750.f, 350.f),
-                sizeof(float)
-            );
-            ImGui::PopStyleColor();
+            if (topMaxY < 0.0001f) topMaxY = 0.0001f;
+            if (bottomMaxY < 0.0001f) bottomMaxY = 0.0001f;
 
-            ImGui::PushStyleColor(ImGuiCol_PlotLines, ImVec4(1.0f, 0.2f, 0.2f, 1.0f));
-            ImGui::PlotLines(
-                "##theory",
-                theory.data(),
-                static_cast<int>(theory.size()),
-                0,
-                "Maxwell-Boltzmann",
-                0.f,
-                yMax,
-                ImVec2(750.f, 350.f),
-                sizeof(float)
-            );
-            ImGui::PopStyleColor();
+            if (ImPlot::BeginPlot("##CurrentPlot", ImVec2(780, 360)))
+            {
+                ImPlot::SetupAxes("Speed", "Probability");
+                ImPlot::SetupAxisLimits(ImAxis_X1, 0.0, plotScale.xMax, ImGuiCond_Always);
+                ImPlot::SetupAxisLimits(ImAxis_Y1, 0.0, plotScale.yMax, ImGuiCond_Always);
 
-            ImGui::Text("X: speed   Y: number of particles");
+                ImPlotSpec barSpec;
+                barSpec.LineColor = ImVec4(0.2f, 0.55f, 1.0f, 1.0f);
+                barSpec.FillColor = ImVec4(0.2f, 0.55f, 1.0f, 0.35f);
+                barSpec.FillAlpha = 0.35f;
+                barSpec.LineWeight = 1.0f;
+
+                ImPlot::PlotBars(
+                    "Current",
+                    x.data(),
+                    currentDensity.data(),
+                    static_cast<int>(x.size()),
+                    sim.getBinWidth() * 0.9f,
+                    barSpec
+                );
+
+                ImPlotSpec lineSpec;
+                lineSpec.LineColor = ImVec4(1.0f, 0.3f, 0.3f, 1.0f);
+                lineSpec.LineWeight = 2.5f;
+
+                ImPlot::PlotLine(
+                    "Maxwell-Boltzmann",
+                    tx.data(),
+                    theoryDensity.data(),
+                    static_cast<int>(tx.size()),
+                    lineSpec
+                );
+
+                ImPlot::EndPlot();
+            }
+
+            if (ImPlot::BeginPlot("##AccumulatedPlot", ImVec2(780, 360)))
+            {
+                ImPlot::SetupAxes("Speed", "Probability");
+                ImPlot::SetupAxisLimits(ImAxis_X1, 0.0, plotScale.xMax, ImGuiCond_Always);
+                ImPlot::SetupAxisLimits(ImAxis_Y1, 0.0, plotScale.yMax, ImGuiCond_Always);
+
+                ImPlotSpec barSpec;
+                barSpec.LineColor = ImVec4(0.2f, 1.0f, 0.4f, 1.0f);
+                barSpec.FillColor = ImVec4(0.2f, 1.0f, 0.4f, 0.35f);
+                barSpec.FillAlpha = 0.35f;
+                barSpec.LineWeight = 1.0f;
+
+                ImPlot::PlotBars(
+                    "Accumulated",
+                    x.data(),
+                    totalDensity.data(),
+                    static_cast<int>(x.size()),
+                    sim.getBinWidth() * 0.9f,
+                    barSpec
+                );
+
+                ImPlotSpec lineSpec;
+                lineSpec.LineColor = ImVec4(1.0f, 0.3f, 0.3f, 1.0f);
+                lineSpec.LineWeight = 2.5f;
+
+                ImPlot::PlotLine(
+                    "Maxwell-Boltzmann",
+                    tx.data(),
+                    theoryDensity.data(),
+                    static_cast<int>(tx.size()),
+                    lineSpec
+                );
+
+                ImPlot::EndPlot();
+            }
         }
         else
         {
-            ImGui::Text("Waiting for data...");
+            ImGui::Text("Collecting data...");
         }
 
         ImGui::End();
 
-        window.clear();
+        window.clear(sf::Color(18, 18, 22));
         sim.render(window);
+
         ImGui::SFML::Render(window);
         window.display();
     }
 
+    ImPlot::DestroyContext();
     ImGui::SFML::Shutdown();
     return 0;
 }

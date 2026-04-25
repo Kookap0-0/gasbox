@@ -283,6 +283,54 @@ libs/imgui/imgui_widgets.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.s
 .PHONY : libs/imgui/imgui_widgets.cpp.s
 
+libs/implot/implot.o: libs/implot/implot.cpp.o
+.PHONY : libs/implot/implot.o
+
+# target to build an object file
+libs/implot/implot.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o
+.PHONY : libs/implot/implot.cpp.o
+
+libs/implot/implot.i: libs/implot/implot.cpp.i
+.PHONY : libs/implot/implot.i
+
+# target to preprocess a source file
+libs/implot/implot.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/libs/implot/implot.cpp.i
+.PHONY : libs/implot/implot.cpp.i
+
+libs/implot/implot.s: libs/implot/implot.cpp.s
+.PHONY : libs/implot/implot.s
+
+# target to generate assembly for a file
+libs/implot/implot.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/libs/implot/implot.cpp.s
+.PHONY : libs/implot/implot.cpp.s
+
+libs/implot/implot_items.o: libs/implot/implot_items.cpp.o
+.PHONY : libs/implot/implot_items.o
+
+# target to build an object file
+libs/implot/implot_items.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o
+.PHONY : libs/implot/implot_items.cpp.o
+
+libs/implot/implot_items.i: libs/implot/implot_items.cpp.i
+.PHONY : libs/implot/implot_items.i
+
+# target to preprocess a source file
+libs/implot/implot_items.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.i
+.PHONY : libs/implot/implot_items.cpp.i
+
+libs/implot/implot_items.s: libs/implot/implot_items.cpp.s
+.PHONY : libs/implot/implot_items.s
+
+# target to generate assembly for a file
+libs/implot/implot_items.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gasbox.dir/build.make CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.s
+.PHONY : libs/implot/implot_items.cpp.s
+
 src/Box.o: src/Box.cpp.o
 .PHONY : src/Box.o
 
@@ -405,6 +453,12 @@ help:
 	@echo "... libs/imgui/imgui_widgets.o"
 	@echo "... libs/imgui/imgui_widgets.i"
 	@echo "... libs/imgui/imgui_widgets.s"
+	@echo "... libs/implot/implot.o"
+	@echo "... libs/implot/implot.i"
+	@echo "... libs/implot/implot.s"
+	@echo "... libs/implot/implot_items.o"
+	@echo "... libs/implot/implot_items.i"
+	@echo "... libs/implot/implot_items.s"
 	@echo "... src/Box.o"
 	@echo "... src/Box.i"
 	@echo "... src/Box.s"

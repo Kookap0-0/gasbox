@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DIMGUI_USER_CONFIG=\"imconfig-SFML.h\"
 
-CXX_INCLUDES = -I/home/reyn/repos/gasbox/libs/imgui-sfml -isystem /home/reyn/repos/gasbox/libs/imgui
+CXX_INCLUDES = -I/home/reyn/repos/gasbox/libs/implot -I/home/reyn/repos/gasbox/libs/imgui-sfml -isystem /home/reyn/repos/gasbox/libs/imgui
 
 CXX_FLAGS = -O3 -DNDEBUG -std=gnu++20
 

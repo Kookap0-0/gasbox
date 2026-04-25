@@ -184,6 +184,34 @@ CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/reyn/repos/gasbox/libs/imgui/imgui_widgets.cpp -o CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.s
 
+CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o: CMakeFiles/gasbox.dir/flags.make
+CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o: /home/reyn/repos/gasbox/libs/implot/implot.cpp
+CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o: CMakeFiles/gasbox.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o -MF CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o.d -o CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o -c /home/reyn/repos/gasbox/libs/implot/implot.cpp
+
+CMakeFiles/gasbox.dir/libs/implot/implot.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/gasbox.dir/libs/implot/implot.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/reyn/repos/gasbox/libs/implot/implot.cpp > CMakeFiles/gasbox.dir/libs/implot/implot.cpp.i
+
+CMakeFiles/gasbox.dir/libs/implot/implot.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/gasbox.dir/libs/implot/implot.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/reyn/repos/gasbox/libs/implot/implot.cpp -o CMakeFiles/gasbox.dir/libs/implot/implot.cpp.s
+
+CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o: CMakeFiles/gasbox.dir/flags.make
+CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o: /home/reyn/repos/gasbox/libs/implot/implot_items.cpp
+CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o: CMakeFiles/gasbox.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o -MF CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o.d -o CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o -c /home/reyn/repos/gasbox/libs/implot/implot_items.cpp
+
+CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/reyn/repos/gasbox/libs/implot/implot_items.cpp > CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.i
+
+CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/reyn/repos/gasbox/libs/implot/implot_items.cpp -o CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.s
+
 # Object files for target gasbox
 gasbox_OBJECTS = \
 "CMakeFiles/gasbox.dir/src/main.cpp.o" \
@@ -193,7 +221,9 @@ gasbox_OBJECTS = \
 "CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o" \
 "CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o" \
 "CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o" \
-"CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o"
+"CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o" \
+"CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o" \
+"CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o"
 
 # External object files for target gasbox
 gasbox_EXTERNAL_OBJECTS =
@@ -206,6 +236,8 @@ gasbox: CMakeFiles/gasbox.dir/libs/imgui/imgui.cpp.o
 gasbox: CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o
 gasbox: CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o
 gasbox: CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o
+gasbox: CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o
+gasbox: CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o
 gasbox: CMakeFiles/gasbox.dir/build.make
 gasbox: CMakeFiles/gasbox.dir/compiler_depend.ts
 gasbox: libs/imgui-sfml/libImGui-SFML.a
@@ -214,7 +246,7 @@ gasbox: /usr/local/lib64/libsfml-window.so.3.0.0
 gasbox: /usr/local/lib64/libsfml-system.so.3.0.0
 gasbox: /usr/lib64/libGL.so
 gasbox: CMakeFiles/gasbox.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable gasbox"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/reyn/repos/gasbox/build-linux/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable gasbox"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gasbox.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

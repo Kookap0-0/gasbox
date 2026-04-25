@@ -10,6 +10,8 @@ gasbox: \
   CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o \
   CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o \
   CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o \
+  CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o \
+  CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o \
   libs/imgui-sfml/libImGui-SFML.a \
   /usr/local/lib64/libsfml-graphics.so.3.0.0 \
   /usr/local/lib64/libsfml-window.so.3.0.0 \
@@ -87,6 +89,10 @@ CMakeFiles/gasbox.dir/libs/imgui/imgui_draw.cpp.o:
 CMakeFiles/gasbox.dir/libs/imgui/imgui_tables.cpp.o:
 
 CMakeFiles/gasbox.dir/libs/imgui/imgui_widgets.cpp.o:
+
+CMakeFiles/gasbox.dir/libs/implot/implot.cpp.o:
+
+CMakeFiles/gasbox.dir/libs/implot/implot_items.cpp.o:
 
 libs/imgui-sfml/libImGui-SFML.a:
 
